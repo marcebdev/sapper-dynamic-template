@@ -1,5 +1,7 @@
 import { getShallowPosts } from '../util/posts.js';
 
+//FIXME: add navigation for this
+
 /*
 const contents = JSON.stringify(posts.map(post => {
 	return {

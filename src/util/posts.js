@@ -1,5 +1,5 @@
 import fs from 'fs';
-import path from 'path';
+import path from 'path'
 import marked from 'marked';
 
 import { contentPath as defaultContentPath } from 'settings'

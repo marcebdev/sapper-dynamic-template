@@ -6,3 +6,5 @@
 
 // This is where the sites content is generated from
 export const contentPath = "content"
+
+export const fileType = ".md"
