@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path'
+
 // Recursive readdirSync Implementation
 export function readdirSyncRec(dir, fileList=[], base = true) {
 

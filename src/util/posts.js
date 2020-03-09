@@ -6,8 +6,8 @@ import { contentPath as defaultContentPath } from 'settings'
 
 import { readdirSyncRec } from "./fs.js"
 
-//FIXME: make this a settings variable
-//	should be generalized to support more file types before doing this though
+//FIXME: document functions
+//FIXME: take this from settings, (has ot support arrays first)
 const fileType = ".md"
 
 
@@ -16,24 +16,23 @@ export function getShallowPosts (contentPath = defaultContentPath) {
 		.filter(file => path.extname(file) === fileType)
 		.map(file => file.slice(0, -fileType.length));
 
-	// TODO: this is how they are sorted?
-	return slugs.map(getPost).sort((a, b) => {
+	// TODO: this is how they are sorted
+	return slugs.map(slug => getPost(slug, contentPath)).sort((a, b) => {
 		return a.metadata.pubdate < b.metadata.pubdate ? 1 : -1;
 	});
 }
 
-
-// TODO: remove shallow posts since can't be technically generated?
 export function getAllPosts (contentPath = defaultContentPath) {
 	const slugs = readdirSyncRec(contentPath)
 		.filter(file => path.extname(file) === fileType)
 		.map(file => file.substring(contentPath.length + 1).slice(0, -fileType.length))
 
-	return slugs.map(getPost).sort((a, b) => {
+	return slugs.map(slug => getPost(slug, contentPath)).sort((a, b) => {
 		return a.metadata.pubdate < b.metadata.pubdate ? 1 : -1;
 	});
 }
 
+//TODO: add a getNestedPosts
 
 //TODO: define as MD specific or make generic (may depend on sorting)
 export function getPost(slug, contentPath = defaultContentPath) {

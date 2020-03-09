@@ -1,12 +1,6 @@
 <script>
-  import { getRootPaths, getSmartNestedPaths } from "../util/paths.js";
   import { isObject, alphaNumSort } from "../util/misc.js";
-
-  const dynamicPaths = getRootPaths()
-    .concat(getSmartNestedPaths())
-    .sort((a, b) =>
-      alphaNumSort(isObject(a) ? a.rootName : a, isObject(b) ? b.rootName : b)
-    );
+  import { dynamicPaths } from "../store.js";
 
   //FIXME: segment is essentially deprecate
   export let segment;
@@ -61,34 +55,38 @@
 
 <nav>
   <ul>
+    <!-- Home/index path -->
     <li>
       <a class:selected={segment === undefined} href=".">home</a>
     </li>
 
+    <!-- Svelte pages paths -->
+    <li>
+      <a class:selected={segment === 'about'} href="directory">directory</a>
+    </li>
+
     <!-- Add paths for dynamic content -->
-    {#each dynamicPaths as path}
+    {#each $dynamicPaths as path}
       <li>
         {#if isObject(path)}
-          <a class:selected={segment == path.rootName} href={path.path}>
+          <a
+            class="clean-link"
+            class:selected={segment == path.rootName}
+            href={path.path}>
             {path.rootName}
           </a>
         {:else}
           <a class:selected={segment == path} href={path}>{path}</a>
         {/if}
-
       </li>
     {/each}
 
-    <!-- Svelte pages paths -->
-    <li>
-      <a class:selected={segment === 'about'} href="about">about</a>
-    </li>
+  </ul>
+</nav>
 
-    <!-- TODO: prefetch path for dynamic path links? -->
-    <!-- for the blog link, we're using rel=prefetch so that Sapper prefetches
+<!-- TODO: prefetch path for dynamic path links? -->
+<!-- for the blog link, we're using rel=prefetch so that Sapper prefetches
 		     the blog data when we hover over the link or tap it on a touchscreen
     <li>
       <a rel="prefetch" class:selected={segment === 'blog'} href="blog">blog</a>
     </li> -->
-  </ul>
-</nav>

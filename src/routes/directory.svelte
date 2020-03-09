@@ -1,4 +1,5 @@
 <script context="module">
+  //TODO: display both getshallowPosts and getAllPosts
   export function preload({ params, query }) {
     return this.fetch(`directory.json`)
       .then(r => r.json())
